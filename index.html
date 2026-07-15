@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>George Sarpong · KI &amp; Medienprojekte</title>
+<meta name="description" content="George Sarpong: sechs KI- und Medienprojekte aus dem Redaktionsalltag. Transkription, Recherche-Archive, Monitoring, Podcast-Produktion.">
+<meta property="og:title" content="George Sarpong · KI &amp; Medienprojekte">
+<meta property="og:description" content="Sechs Eigenbau-Projekte. Journalismus, der seine eigenen Werkzeuge baut.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Syne+Mono&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:         #080808;
+    --surface:    #111111;
+    --surface2:   #1A1A1A;
+    --border:     #222222;
+    --border2:    #2E2E2E;
+    --text:       #EDE9E1;
+    --muted:      #8A847C;
+    --accent:     #E87820;
+    --accent-dim: rgba(232,120,32,0.10);
+    --accent-glow:rgba(232,120,32,0.18);
+    --loeb-bg:    #0C0A08;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display { font-family: 'Syne', sans-serif; }
+  .mono { font-family: 'Syne Mono', monospace; letter-spacing: 0.02em; }
+
+  a { color: inherit; }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5vw;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(16px);
+    z-index: 100;
+  }
+  .nav-name { font-weight: 700; font-size: 1.05rem; letter-spacing: 0.01em; }
+  .nav-links { display: flex; gap: 2rem; font-size: 0.85rem; color: var(--muted); }
+  .nav-links a { text-decoration: none; transition: color .2s; }
+  .nav-links a:hover, .nav-links a:focus-visible { color: var(--accent); outline: none; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 7rem 5vw 5rem;
+    max-width: 1100px;
+  }
+  .hero .eyebrow {
+    color: var(--accent);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero h1 {
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.12;
+    max-width: 16ch;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero p.lead {
+    margin-top: 1.6rem;
+    color: var(--muted);
+    font-size: 1.1rem;
+    max-width: 56ch;
+  }
+  .hero-stats {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    max-width: 720px;
+  }
+  .stat .num { font-family: 'Syne', sans-serif; font-size: 1.9rem; font-weight: 700; color: var(--accent); }
+  .stat .label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
+
+  /* ── SECTION HEADER ── */
+  .section-head {
+    padding: 3rem 5vw 1.5rem;
+    max-width: 1100px;
+    border-top: 1px solid var(--border);
+  }
+  .section-head .eyebrow {
+    color: var(--accent);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.7rem;
+  }
+  .section-head h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; max-width: 30ch; }
+  .section-head p { color: var(--muted); margin-top: 0.8rem; max-width: 60ch; font-size: 0.98rem; }
+
+  /* ── PROJECT GRID ── */
+  .grid {
+    padding: 1rem 5vw 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.25rem;
+    max-width: 1200px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: border-color .25s, transform .25s;
+  }
+  .card:hover, .card:focus-within {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+  }
+  .card .kicker {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .card .num { font-family: 'Syne Mono', monospace; color: var(--muted); font-size: 0.8rem; }
+  .card .tag {
+    font-size: 0.7rem;
+    color: var(--accent);
+    border: 1px solid var(--accent-dim);
+    background: var(--accent-dim);
+    padding: 0.2rem 0.55rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .card h3 { font-size: 1.2rem; font-weight: 700; line-height: 1.3; }
+  .card p { color: var(--muted); font-size: 0.93rem; }
+  .card .metric {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+  }
+  .card .metric .value { color: var(--accent); font-weight: 600; font-family: 'Syne', sans-serif; }
+  .card .stack { font-size: 0.75rem; color: var(--muted); }
+  .card .links { display: flex; gap: 1rem; }
+  .card .links a {
+    font-size: 0.8rem;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border2);
+    padding-bottom: 1px;
+    transition: color .2s, border-color .2s;
+  }
+  .card .links a:hover, .card .links a:focus-visible { color: var(--accent); border-color: var(--accent); outline: none; }
+
+  /* ── LOEB DARK SECTION ── */
+  .loeb {
+    background: var(--loeb-bg);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 4.5rem 5vw;
+  }
+  .loeb-inner { max-width: 1100px; margin: 0 auto; }
+  .loeb .eyebrow { color: var(--accent); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  .loeb h2 { font-size: clamp(1.6rem, 3.4vw, 2.3rem); font-weight: 700; margin-top: 0.7rem; max-width: 22ch; }
+  .loeb p.lead { color: var(--muted); margin-top: 1rem; max-width: 62ch; font-size: 1rem; }
+  .loeb-flow {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--border2);
+    border-left: 1px solid var(--border2);
+  }
+  .loeb-step {
+    border-right: 1px solid var(--border2);
+    border-bottom: 1px solid var(--border2);
+    padding: 1.6rem 1.4rem;
+    position: relative;
+  }
+  .loeb-step .stage { font-family: 'Syne Mono', monospace; font-size: 0.72rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; }
+  .loeb-step h4 { font-size: 1rem; font-weight: 700; margin-top: 0.6rem; }
+  .loeb-step p { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
+  .loeb-meta {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+  }
+  .loeb-meta .item .num { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+  .loeb-meta .item .label { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3.5rem 5vw 4rem;
+    max-width: 1100px;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  footer .name { color: var(--text); font-weight: 700; font-family: 'Syne', sans-serif; font-size: 1.1rem; }
+  footer .contact { margin-top: 0.8rem; display: flex; flex-wrap: wrap; gap: 1.5rem; }
+  footer .contact a { text-decoration: none; border-bottom: 1px solid var(--border2); padding-bottom: 1px; }
+  footer .contact a:hover { color: var(--accent); border-color: var(--accent); }
+  footer .note { margin-top: 2rem; font-size: 0.78rem; color: #58534B; max-width: 60ch; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-name">George Sarpong</div>
+  <div class="nav-links">
+    <a href="#projekte">Projekte</a>
+    <a href="#loeb">LOEB Life</a>
+    <a href="#kontakt">Kontakt</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <span class="eyebrow">KI &amp; Medienprojekte · Portfolio</span>
+  <h1>Journalismus, der seine eigenen <em>Werkzeuge baut.</em></h1>
+  <p class="lead">Sechs Projekte, ein Muster: redaktionelle Arbeit dort automatisieren, wo Zeit verloren geht. Recherche, Transkription, Monitoring, Formularflut. Das Handwerk bleibt beim Menschen, die Wiederholung geht an die Maschine.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="num">6</div><div class="label">Eigenbau-Projekte, dokumentiert</div></div>
+    <div class="stat"><div class="num">8&nbsp;h → 30&nbsp;min</div><div class="label">Transkription pro Interview</div></div>
+    <div class="stat"><div class="num">346</div><div class="label">verifizierte IJF-Sprecher:innen im Archiv</div></div>
+  </div>
+</section>
+
+<div class="section-head" id="projekte">
+  <span class="eyebrow">Projekte</span>
+  <h2>Was gebaut wurde und wofür</h2>
+  <p>Jedes Projekt löst ein konkretes Problem: Zeit sparen, Wissen erschliessen, ein Produkt denken. Die Werkzeuge laufen im praktischen Einsatz.</p>
+</div>
+
+<div class="grid">
+
+  <!-- 01 — Daily Job Scout -->
+  <article class="card">
+    <div class="kicker"><span class="num">01</span><span class="tag">Automation</span></div>
+    <h3>Daily Job Scout</h3>
+    <p>Ein Google-Apps-Script-System scannt zweimal täglich über 20 Stellenquellen, bewertet Treffer per Gemini-API gegen ein persönliches Profil und liefert Fit-Score, Motivationsschreiben-Entwurf und CV-Tipps direkt ins Sheet. Quelloffen, mit Anleitung.</p>
+    <div class="metric">
+      <span class="stack mono">Apps Script · Gemini API</span>
+      <span class="value">~5 Std./Woche gespart</span>
+    </div>
+    <!-- FILL-IN 1: Repo-URL Daily Job Scout einsetzen -->
+    <div class="links"><a href="PLATZHALTER_GITHUB_JOBSCOUT" target="_blank" rel="noopener">Code auf GitHub</a></div>
+  </article>
+
+  <!-- 02 — Transkriptionstool -->
+  <article class="card">
+    <div class="kicker"><span class="num">02</span><span class="tag">Neu · Juli 2026</span></div>
+    <h3>Audio-Transkription für Interviews &amp; Meetings</h3>
+    <p>Lokale Mac-App (Streamlit) an die Speechmatics-API angebunden. Aufnahme reinziehen, wenige Minuten warten: sprechergetrenntes Transkript mit Zeitstempeln, automatisch in Schweizer Orthografie. Für Kolleg:innen ohne Technikhintergrund mit eigener Schritt-für-Schritt-Anleitung dokumentiert.</p>
+    <div class="metric">
+      <span class="stack mono">Python · Streamlit · Speechmatics</span>
+      <span class="value">8 Std. → 30 Min pro Interview</span>
+    </div>
+  </article>
+
+  <!-- 03 — Daily Media Briefing -->
+  <article class="card">
+    <div class="kicker"><span class="num">03</span><span class="tag">Neu · 2026</span></div>
+    <h3>Tägliches Medien-, Tech- &amp; Business-Briefing</h3>
+    <p>Kuratierter Gemini-Workflow mit fünfstufiger Quellenliste (internationale Medienbranche, KI/Tech, Schweizer Medienlandschaft, Forschung, Einzelstimmen). Liefert täglich kategorisierte, quellenbelegte Kurzmeldungen plus einen fertigen LinkedIn-Post-Entwurf. Wöchentlich dazu eine Longform-Einordnung.</p>
+    <div class="metric">
+      <span class="stack mono">Gemini · kuratierte Quellenliste</span>
+      <span class="value">Anti-Halluzinations-Regelwerk</span>
+    </div>
+  </article>
+
+  <!-- 04 — IJF NotebookLM -->
+  <article class="card">
+    <div class="kicker"><span class="num">04</span><span class="tag">Archiv</span></div>
+    <h3>International Journalism Festival — durchsuchbar gemacht</h3>
+    <p>181 Panels und 346 verifizierte Sprecher:innen des IJF Perugia 2026, per Whisper transkribiert und in ein NotebookLM überführt. Frage eingeben, Antwort mit Quellenangabe erhalten. Der Zugang erfordert ein Google-Konto.</p>
+    <div class="metric">
+      <span class="stack mono">Python · Whisper · NotebookLM</span>
+      <span class="value">Faktor 50+ ggü. manueller Sichtung</span>
+    </div>
+    <!-- FILL-IN 2: NotebookLM-Freigabelink einsetzen -->
+    <div class="links"><a href="PLATZHALTER_NOTEBOOKLM_LINK" target="_blank" rel="noopener">Archiv öffnen (NotebookLM)</a></div>
+  </article>
+
+  <!-- 05 — KI-Weiterbildung SFJ -->
+  <article class="card">
+    <div class="kicker"><span class="num">05</span><span class="tag">Bildung</span></div>
+    <h3>KI-Weiterbildung im Fachjournalistenverband SFJ</h3>
+    <p>Als Programmverantwortlicher Weiterbildung im Vorstand entwickle ich das Kursangebot des Verbands weiter, ausgerichtet auf den KI-Alltag der Mitglieder. Formate: zwei Ganztagesworkshops pro Jahr und das SFJ-Meetup, ein einstündiges Online-Format alle zwei Monate.</p>
+    <div class="metric">
+      <span class="stack mono">Programmentwicklung · Kuratierung</span>
+      <span class="value">Im Vorstand seit 2021</span>
+    </div>
+  </article>
+
+  <!-- 06 — Doggli -->
+  <article class="card">
+    <div class="kicker"><span class="num">06</span><span class="tag">Simulation</span></div>
+    <h3>Doggli — Startup-Pitch aus der xMBA-Simulation</h3>
+    <p>Als CPO &amp; Narrative Lead ein Abo-Modell für die Mittagsbetreuung von Hunden in Zürich entwickelt. Kernbotschaft: «Wir verkaufen Planbarkeit.» Ein simuliertes Term Sheet erfolgreich verhandelt.</p>
+    <div class="metric">
+      <span class="stack mono">xMBA AI Business Simulation</span>
+      <span class="value">CHF 2.85 Mio Pre-Money verhandelt</span>
+    </div>
+  </article>
+
+</div>
+
+<section class="loeb" id="loeb">
+  <div class="loeb-inner">
+    <span class="eyebrow">Live-Produktion</span>
+    <h2>LOEB Life: KI im Produktions-Workflow eines Podcasts</h2>
+    <p class="lead">Als Showrunner verantworte ich «LOEB Life» seit Oktober 2025 redaktionell, von der Themenfindung bis zur Veröffentlichung. An vier Stationen der Produktion gehört KI heute fest zum Workflow. Sie ersetzt keine redaktionellen Entscheidungen. Sie verwandelt Vorbereitungszeit in Gesprächstiefe.</p>
+
+    <div class="loeb-flow">
+      <div class="loeb-step">
+        <span class="stage mono">Vorbereitung</span>
+        <h4>Gesprächsleitfaden</h4>
+        <p>Eine strukturierte Methode entwickelt Fragenkataloge pro Folge, von der grossen Frage bis zu den Feinstoff-Fragen. Für Gast- wie Themenfolgen.</p>
+      </div>
+      <div class="loeb-step">
+        <span class="stage mono">Gast-Onboarding</span>
+        <h4>Gastbriefing</h4>
+        <p>Ein kurzes, warmes Vorbereitungsdokument für Gäste: Ablauf, Tonalität, Erwartungen, ohne die Fragen selbst zu verraten.</p>
+      </div>
+      <div class="loeb-step">
+        <span class="stage mono">Nachbereitung</span>
+        <h4>Transkription</h4>
+        <p>Das Rohmaterial wird sprechergetrennt transkribiert. Grundlage für Schnitt und Zitatauswahl (Projekt 02).</p>
+      </div>
+      <div class="loeb-step">
+        <span class="stage mono">Veröffentlichung</span>
+        <h4>Shownotes &amp; SEO</h4>
+        <p>SEO-optimierte Episodenbeschreibung und Keywords für bessere Auffindbarkeit auf Spotify und in Suchmaschinen.</p>
+      </div>
+    </div>
+
+    <div class="loeb-meta">
+      <div class="item"><div class="num">Staffel 2</div><div class="label">aktuell in Produktion</div></div>
+      <div class="item"><div class="num">4</div><div class="label">KI-Stationen im Workflow</div></div>
+      <div class="item"><div class="num">10/2025</div><div class="label">Showrunner seit</div></div>
+    </div>
+  </div>
+</section>
+
+<footer id="kontakt">
+  <div class="name">George Sarpong</div>
+  <div class="contact">
+    <!-- FILL-IN 3 + 4: E-Mail und LinkedIn-URL einsetzen -->
+    <a href="mailto:PLATZHALTER_EMAIL">E-Mail</a>
+    <a href="PLATZHALTER_LINKEDIN_URL" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+  <div class="note">Motivationsschreiben und Lebenslauf liegen der Bewerbung als separate Dokumente bei. Weitere Code-Repositorien und Arbeitsproben auf Anfrage. Stand: Juli 2026.</div>
+</footer>
+
+</body>
+</html>
